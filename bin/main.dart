@@ -75,22 +75,11 @@ dynamic stackCalc(String stack) {
   }
 }
 
-bool isInteger(String x) {
-  if (x == '1' ||
-      x == '2' ||
-      x == '3' ||
-      x == '4' ||
-      x == '5' ||
-      x == '6' ||
-      x == '7' ||
-      x == '8' ||
-      x == '9' ||
-      x == '0') {
-    return true;
-  } else {
-    return false;
-  }
+
+bool isInteger(String s) {
+  return int.tryParse(s) != null;
 }
+//https://stackoverflow.com/questions/24085385/checking-if-string-is-numeric-in-dart
 
 main() {
   // print(stackCalc("1 5 6 6 + - /"));
