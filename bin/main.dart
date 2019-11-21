@@ -21,6 +21,97 @@
 //  StackCalc("3 DUP +") ➞ 6
 //  StackCalc("6 5 5 7 * - /") ➞ 5
 //  StackCalc("x y +") ➞ Invalid instruction: x
+dynamic StackCalc(String stack) {
+  List stackList = stack.split(' ').toList();
+  List returnStack = [];
+  // int indexOfFirstOp = stackList.firstWhere();
+  for (int i = 0; i < stackList.length; i++) {
+    String element = stackList[i];
+    if (isInteger(element)) {
+      returnStack.add(int.parse(element));
+    } else {
+      if (element == '+') {
+        int result = returnStack.removeLast() + returnStack.removeLast();
+        returnStack.add(result);
+      } else if (element == '-') {
+        int result = returnStack.removeLast() - returnStack.removeLast();
+        returnStack.add(result);
+      } else if (element == '*') {
+        int result = returnStack.removeLast() * returnStack.removeLast();
+        returnStack.add(result);
+      } else if (element == '/') {
+        int result = returnStack.removeLast() ~/ returnStack.removeLast();
+        returnStack.add(result);
+      }
+    }
+  }
+  // if (indexOfFirstOp == -1) {
+  //   return 0;
+  // }
+  print(returnStack);
+  return returnStack.last;
+}
+
+int firstOperatorIndex(List stackList) {
+  List x = [];
+  print(x);
+  if (stackList.contains('*')) {
+    stackList.indexOf('*');
+    return 0;
+  } else if (stackList.contains('+')) {
+    return stackList.indexOf('+');
+  } else if (stackList.contains('-')) {
+    return stackList.indexOf('-');
+  } else if (stackList.contains('/')) {
+    return stackList.indexOf('/');
+  } else {
+    return -1;
+  }
+}
+
+bool isOperator(String x) {
+  if (x == '/') {
+    return true;
+  } else if (x == '*') {
+    return true;
+  } else if (x == '+') {
+    return true;
+  } else if (x == '-') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool isInteger(String x) {
+  if (x == '1') {
+    return true;
+  } else if (x == '2') {
+    return true;
+  } else if (x == '3') {
+    return true;
+  } else if (x == '4') {
+    return true;
+  } else if (x == '5') {
+    return true;
+  } else if (x == '6') {
+    return true;
+  } else if (x == '7') {
+    return true;
+  } else if (x == '8') {
+    return true;
+  } else if (x == '9') {
+    return true;
+  } else if (x == '0') {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 main() {
+  print(StackCalc("5 6 +"));
+  // List stackList = ['5', '6', '+'];
+  // String x ='+';
+  // int y =+;
 }
