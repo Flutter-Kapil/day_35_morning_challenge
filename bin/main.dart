@@ -21,8 +21,12 @@
 //  StackCalc("3 DUP +") ➞ 6
 //  StackCalc("6 5 5 7 * - /") ➞ 5
 //  StackCalc("x y +") ➞ Invalid instruction: x
-dynamic StackCalc(String stack) {
-  List stackList = stack.split(' ').toList();
+dynamic stackCalc(String stack) {
+  if (stack.isEmpty) {
+    return 0;
+  }
+  try{
+    List stackList = stack.split(' ').toList();
   List returnStack = [];
   // int indexOfFirstOp = stackList.firstWhere();
   for (int i = 0; i < stackList.length; i++) {
@@ -30,79 +34,58 @@ dynamic StackCalc(String stack) {
     if (isInteger(element)) {
       returnStack.add(int.parse(element));
     } else {
-      if (element == '+') {
+      // print(returnStack.length);
+      // if(returnStack.length<2){
+      //   return ArgumentError;
+      // }
+      if(returnStack.isEmpty){
+        throw Error();
+      }
+      if (element == 'POP' && returnStack.isNotEmpty) {
+        returnStack.removeAt(returnStack.length - 1);
+      } else if (element == 'DUP' && returnStack.isNotEmpty) {
+        int result = returnStack.last;
+        returnStack.add(result);
+      } else if (element == '+' && returnStack.length >= 2) {
         int result = returnStack.removeLast() + returnStack.removeLast();
         returnStack.add(result);
-      } else if (element == '-') {
+      } else if (element == '-' && returnStack.length >= 2) {
         int result = returnStack.removeLast() - returnStack.removeLast();
         returnStack.add(result);
-      } else if (element == '*') {
+      } else if (element == '*' && returnStack.length >= 2) {
         int result = returnStack.removeLast() * returnStack.removeLast();
         returnStack.add(result);
-      } else if (element == '/') {
-        int result = returnStack.removeLast() ~/ returnStack.removeLast();
+      } else if (element == '/' && returnStack.length >= 2) {
+        int last = returnStack.removeLast();
+        int secondLast = returnStack.removeLast();
+        if(secondLast==0){
+          return ArgumentError('Invalid Input: divide by zero');
+        }
+        int result = last ~/ secondLast;
         returnStack.add(result);
+      } else if (returnStack.length == 1) {
+        throw ArgumentError('Invalid input');
       }
     }
   }
-  // if (indexOfFirstOp == -1) {
-  //   return 0;
-  // }
-  print(returnStack);
   return returnStack.last;
-}
-
-int firstOperatorIndex(List stackList) {
-  List x = [];
-  print(x);
-  if (stackList.contains('*')) {
-    stackList.indexOf('*');
-    return 0;
-  } else if (stackList.contains('+')) {
-    return stackList.indexOf('+');
-  } else if (stackList.contains('-')) {
-    return stackList.indexOf('-');
-  } else if (stackList.contains('/')) {
-    return stackList.indexOf('/');
-  } else {
-    return -1;
-  }
-}
-
-bool isOperator(String x) {
-  if (x == '/') {
-    return true;
-  } else if (x == '*') {
-    return true;
-  } else if (x == '+') {
-    return true;
-  } else if (x == '-') {
-    return true;
-  } else {
-    return false;
+  }catch(e){
+    print('debug statement ,error:$e');
+    return('Invalid Input');
   }
 }
 
 bool isInteger(String x) {
-  if (x == '1') {
-    return true;
-  } else if (x == '2') {
-    return true;
-  } else if (x == '3') {
-    return true;
-  } else if (x == '4') {
-    return true;
-  } else if (x == '5') {
-    return true;
-  } else if (x == '6') {
-    return true;
-  } else if (x == '7') {
-    return true;
-  } else if (x == '8') {
-    return true;
-  } else if (x == '9') {
-    return true;
-  } else if (x == '0') {
+  if (x == '1' ||
+      x == '2' ||
+      x == '3' ||
+      x == '4' ||
+      x == '5' ||
+      x == '6' ||
+      x == '7' ||
+      x == '8' ||
+      x == '9' ||
+      x == '0') {
     return true;
   } else {
     return false;
@@ -110,8 +93,16 @@ bool isInteger(String x) {
 }
 
 main() {
-  print(StackCalc("5 6 +"));
-  // List stackList = ['5', '6', '+'];
-  // String x ='+';
-  // int y =+;
+  // print(stackCalc("1 5 6 6 + - /"));
+  // print(stackCalc("3 DUP +"));
+  // print(stackCalc("3 +"));
+  // print(stackCalc("1 5 6 POP +"));
+  // print(stackCalc("6 5 5 7 POP - +"));
+  // print(stackCalc("0 5 5 7 POP - /"));
+  // print(stackCalc("6 5 0 7 POP - /"));//since we are using ~/ instead of / output will be zero
+  // print(stackCalc("2 1 POP +"));
+  print(stackCalc("+ - 1 2 +"));
+  // List x=[];
+  // x.removeLast();
+  // print(x);
 }
