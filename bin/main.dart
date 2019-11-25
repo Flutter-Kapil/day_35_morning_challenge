@@ -41,9 +41,9 @@ dynamic stackCalc(String stack) {
       if(returnStack.isEmpty){
         throw Error();
       }
-      if (element == 'POP' && returnStack.isNotEmpty) {
+      if (element == 'POP' ) {
         returnStack.removeAt(returnStack.length - 1);
-      } else if (element == 'DUP' && returnStack.isNotEmpty) {
+      } else if (element == 'DUP' ) {
         int result = returnStack.last;
         returnStack.add(result);
       } else if (element == '+' && returnStack.length >= 2) {
