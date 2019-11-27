@@ -34,10 +34,7 @@ dynamic stackCalc(String stack) {
     if (isInteger(element)) {
       returnStack.add(int.parse(element));
     } else {
-      // print(returnStack.length);
-      // if(returnStack.length<2){
-      //   return ArgumentError;
-      // }
+
       if(returnStack.isEmpty){
         throw Error();
       }
@@ -47,13 +44,19 @@ dynamic stackCalc(String stack) {
         int result = returnStack.last;
         returnStack.add(result);
       } else if (element == '+' && returnStack.length >= 2) {
-        int result = returnStack.removeLast() + returnStack.removeLast();
+        int last = returnStack.removeLast();
+        int secondLast = returnStack.removeLast();
+        int result = last + secondLast;
         returnStack.add(result);
       } else if (element == '-' && returnStack.length >= 2) {
-        int result = returnStack.removeLast() - returnStack.removeLast();
+        int last = returnStack.removeLast();
+        int secondLast = returnStack.removeLast();
+        int result = last - secondLast;
         returnStack.add(result);
       } else if (element == '*' && returnStack.length >= 2) {
-        int result = returnStack.removeLast() * returnStack.removeLast();
+        int last = returnStack.removeLast();
+        int secondLast = returnStack.removeLast();
+        int result = last * secondLast;
         returnStack.add(result);
       } else if (element == '/' && returnStack.length >= 2) {
         int last = returnStack.removeLast();
@@ -61,6 +64,7 @@ dynamic stackCalc(String stack) {
         if(secondLast==0){
           return ArgumentError('Invalid Input: divide by zero');
         }
+
         int result = last ~/ secondLast;
         returnStack.add(result);
       } else if (returnStack.length == 1) {
