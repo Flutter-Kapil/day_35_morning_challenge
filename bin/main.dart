@@ -46,17 +46,17 @@ dynamic stackCalc(String stack) {
       } else if (element == '+' && returnStack.length >= 2) {
         int last = returnStack.removeLast();
         int secondLast = returnStack.removeLast();
-        int result = last + secondLast;
+        int result = mathsOperations(last, secondLast).add();
         returnStack.add(result);
       } else if (element == '-' && returnStack.length >= 2) {
         int last = returnStack.removeLast();
         int secondLast = returnStack.removeLast();
-        int result = last - secondLast;
+        int result = mathsOperations(last, secondLast).sub();
         returnStack.add(result);
       } else if (element == '*' && returnStack.length >= 2) {
         int last = returnStack.removeLast();
         int secondLast = returnStack.removeLast();
-        int result = last * secondLast;
+        int result = mathsOperations(last, secondLast).mul();
         returnStack.add(result);
       } else if (element == '/' && returnStack.length >= 2) {
         int last = returnStack.removeLast();
@@ -64,9 +64,7 @@ dynamic stackCalc(String stack) {
         if(secondLast==0){
           return ArgumentError('Invalid Input: divide by zero');
         }
-
-        int result = last ~/ secondLast;
-        returnStack.add(result);
+        returnStack.add(mathsOperations(last, secondLast).div());
       } else if (returnStack.length == 1) {
         throw ArgumentError('Invalid input');
       }
@@ -79,6 +77,16 @@ dynamic stackCalc(String stack) {
   }
 }
 
+class mathsOperations{
+  int x;
+  int y;
+  mathsOperations(this.x,this.y);
+
+  int add()=> this.x+this.y;
+  int sub()=> this.x-this.y;
+  int div()=> this.x~/this.y;
+  int mul()=> this.x*this.y;
+}
 
 bool isInteger(String s) {
   return int.tryParse(s) != null;
